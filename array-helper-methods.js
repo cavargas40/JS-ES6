@@ -1,8 +1,8 @@
+var colors = [ 'red', 'blue', 'green' ];
+
 /*
     Traditional
 */
-
-var colors = [ 'red', 'blue', 'green' ];
 
 for(var i = 0; i < colors.length; i++) {
 	console.log(colors[i]);
@@ -312,3 +312,207 @@ console.log(postForComment(posts, comment))
             return el[Object.keys(criteria)[0]] === criteria[Object.keys(criteria)[0]];
         });
     }
+
+//-----------------------------------------------------------------------//
+
+var computers = [
+    { name: 'Apple', ram: 24 },
+    { name: 'Compaq', ram: 4 },
+    { name: 'Acer', ram: 32 }  
+];
+    
+var allComputersCanRunProgram = true;
+var onlySomeComputersCanRunProgram = false;
+
+/*
+    Traditional
+*/
+for(var i = 0; i < computers.length; i++) {
+    var computer = computers[i];
+
+if(computer.ram < 16){
+    allComputersCanRunProgram = false;
+} else {
+    onlySomeComputersCanRunProgram = true;
+}  
+}
+
+console.log(allComputersCanRunProgram);
+console.log(onlySomeComputersCanRunProgram);
+
+/***************
+	  every // return boolean value like && in every element
+****************/
+
+var everyConditions = computers.every(function(computer) {
+    return computer.ram > 16;	
+});
+
+console.log(allConditions);
+
+/***************
+	  some  // return boolean value like || in every element
+****************/
+
+var someConditions = computers.some(function (computer) {
+    return computer.ram > 16; 
+});
+
+//example 1
+var names = [
+    'Alexandria',
+    'Matthew',
+    'Joe'
+];
+
+names.every(function (name) {
+    return name.length > 4; 
+});
+
+names.some(function (name) {
+    return name.length > 4;
+});
+
+//example 2
+function Field(value) {
+    this.value = value;   
+}
+
+Field.prototype.validate = function(){
+    return this.value.length > 0;
+}
+
+var username = new Field('2cool');
+var password = new Field('my_password');
+var birthdate = new Field('10/10/2010');
+
+//username.validate() && password.validate(); //not so worth
+
+var fields = [username, password, birthdate];
+
+var formsIsValid = fields.every(function (field) {
+    return field.validate();
+});
+
+console.log('The forms is valid? ', formsIsValid);
+
+
+//examples
+
+    //a
+    var users = [
+        { id: 21, hasSubmitted: true },
+        { id: 62, hasSubmitted: false },
+        { id: 4, hasSubmitted: true }
+    ];
+      
+    var hasSubmitted = users.every(function(user) {
+        return user.hasSubmitted;
+    });    
+
+    //b
+    var requests = [
+        { url: '/photos', status: 'complete' },
+        { url: '/albums', status: 'pending' },
+        { url: '/users', status: 'failed' }
+    ];
+      
+    var inProgress = requests.some(function(request) {
+        return request.status === 'pending';
+    });    
+
+//-----------------------------------------------------------------------//
+
+var numbers = [ 10, 20, 30 ];
+var sum = 0;
+
+/*
+    Traditional
+*/
+for (var i = 0; i < numbers.length; i++) {
+    sum += numbers[i];    
+}
+
+console.log(sum);
+
+/***************
+	  reduce
+****************/
+
+var reduceSum = numbers.reduce(function (sum, number) {
+    return sum + number
+}, 0);
+
+console.log(reduceSum);
+
+//example 1
+var primaryColors = [
+    { color: 'red' },
+    { color: 'yellow' },
+    { color: 'blue' }
+];
+
+var arrayOfColors = primaryColors.reduce(function (previous, primaryColor) {
+    previous.push(primaryColor.color);
+
+    return previous;
+}, []);
+
+console.log(arrayOfColors);
+
+//example 2
+    //check if parentesis in string are balance
+        //      '()()()()' --true
+        //      '(((())))' --true
+        //      '))))' --false
+        //      '(())))))'  --false
+
+function balancedParens(string) {
+    return !string.split('').reduce(function(previous, char){
+        if(previous < 0) { return previous; }
+        if(char === '(') { return ++previous; }
+        if(char === ')') { return --previous; }
+        return previous;
+    }, 0);
+}
+
+console.log(balancedParens('(((())))'));
+
+//examples
+
+    //a
+    var trips = [{ distance: 34 }, { distance: 12 } , { distance: 1 }];
+    
+    var totalDistance = trips.reduce(function(sum, trip){
+        return sum + trip.distance;
+    }, 0);
+
+    //b
+    var desks = [
+        { type: 'sitting' },
+        { type: 'standing' },
+        { type: 'sitting' },
+        { type: 'sitting' },
+        { type: 'standing' }
+      ];
+      
+      var deskTypes = desks.reduce(function(previous, desk) {
+          if(desk.type === 'sitting') { previous['sitting']++; }
+          if(desk.type === 'standing') { previous['standing']++; }
+          return previous;
+      }, { sitting: 0, standing: 0 });
+
+    //c
+    var numbers = [1, 1, 2, 3, 4, 4, 111, 111];
+    
+    function unique(array) {
+      return array.reduce(function(acc, arr) {
+        if (acc.indexOf(arr) == -1) acc.push(arr)
+        return acc
+      }, [])
+    }
+    
+    console.log(unique(numbers));   
+
+        
+        
